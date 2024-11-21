@@ -25,7 +25,7 @@ describe("calls-program", () => {
                 "market",
                 owner.tokens["POPCAT"].mint,
                 owner.tokens["USDC"].mint,
-                u16(400),
+                u8(40),
                 u8(7)
             ]
         );
@@ -35,12 +35,11 @@ describe("calls-program", () => {
     it("Market Created", async () => {
 
         const tx = await program.methods.createMarket(
-                400, // premium rate
+                40, // premium rate
                 7, // expiry days
                 5, // price tick size
                 3, // price decimals
                 new BN(1_000_000_000_000), // lot notional amount
-                new BN(40_000_000_000) // lot premium amount
             )
             .accounts({
                 market: marketPda,
@@ -56,10 +55,10 @@ describe("calls-program", () => {
         assert.ok(market.owner.toBase58() === owner.publicKey.toBase58());
         assert.ok(market.baseMint.toBase58() === owner.tokens["POPCAT"].mint.toBase58());
         assert.ok(market.quoteMint.toBase58() === owner.tokens["USDC"].mint.toBase58());
-        assert.ok(market.premiumRate === 400);
+        assert.ok(market.premiumRate === 40);
         assert.ok(market.expiryDays === 7);
         assert.ok(market.priceTickSize === 5);
-        assert.ok(market.priceDecimals === 3);
+        assert.ok(market.priceTickDecimals === 3);
         assert.ok(market.lotNotionalBaseAmount.toNumber() === 1_000_000_000_000);
         assert.ok(market.lotPremiumBaseAmount.toNumber() === 40_000_000_000);
         assert.ok(market.baseDecimals === 12);

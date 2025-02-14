@@ -14,11 +14,9 @@ pub mod calls_program {
         ctx: Context<CreateMarket>,
         premium_rate: u8,
         expiry_days: u8,
-        price_tick_size: u8,   
-        price_tick_decimals: u8,
         lot_notional_base_amount: u64,
     ) -> Result<()> {
-        markets::create_market(ctx, premium_rate, expiry_days, price_tick_size, price_tick_decimals, lot_notional_base_amount)
+        markets::create_market(ctx, premium_rate, expiry_days, lot_notional_base_amount)
     }
 
 }

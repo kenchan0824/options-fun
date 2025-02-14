@@ -7,8 +7,6 @@ pub fn create_market (
     ctx: Context<CreateMarket>,
     premium_rate: u8,
     expiry_days: u8,
-    price_tick_size: u8,   
-    price_tick_decimals: u8,
     lot_notional_base_amount: u64,
 ) -> Result<()> {
 
@@ -22,10 +20,7 @@ pub fn create_market (
     market.expiry_days = expiry_days;
     market.bump = ctx.bumps.market;
 
-    market.price_tick_size = price_tick_size;
-    market.price_tick_decimals = price_tick_decimals;
     market.lot_notional_base_amount = lot_notional_base_amount;
-
     market.lot_premium_base_amount = lot_notional_base_amount / 1000 * premium_rate as u64;
     market.base_decimals = base_mint.decimals;
     market.quote_decimals = quote_mint.decimals;

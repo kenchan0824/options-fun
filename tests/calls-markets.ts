@@ -1,8 +1,7 @@
 import * as anchor from "@coral-xyz/anchor";
 import { web3, Program, BN } from "@coral-xyz/anchor";
-import { TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { CallsProgram } from "../target/types/calls_program";
-import { SimpleUser, findProgramAddress, u8, u16, u64 } from "@solardev/simple-web3";
+import { SimpleUser, findProgramAddress, u8 } from "@solardev/simple-web3";
 const assert = require("assert");
 
 
@@ -37,8 +36,6 @@ describe("calls-program", () => {
         const tx = await program.methods.createMarket(
                 40, // premium rate
                 7, // expiry days
-                5, // price tick size
-                3, // price decimals
                 new BN(1_000_000_000_000), // lot notional amount
             )
             .accounts({
@@ -57,8 +54,6 @@ describe("calls-program", () => {
         assert.ok(market.quoteMint.toBase58() === owner.tokens["USDC"].mint.toBase58());
         assert.ok(market.premiumRate === 40);
         assert.ok(market.expiryDays === 7);
-        assert.ok(market.priceTickSize === 5);
-        assert.ok(market.priceTickDecimals === 3);
         assert.ok(market.lotNotionalBaseAmount.toNumber() === 1_000_000_000_000);
         assert.ok(market.lotPremiumBaseAmount.toNumber() === 40_000_000_000);
         assert.ok(market.baseDecimals === 12);
